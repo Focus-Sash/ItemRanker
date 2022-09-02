@@ -4,7 +4,7 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import path from "path";
 
 const client = new ApolloClient({
-  uri: path.join(process.cwd(), "/api/graphql"),
+  uri: path.join(process.cwd(), "api/graphql"),
   cache: new InMemoryCache(),
 });
 
