@@ -6,7 +6,7 @@ import styles from "../styles/Home.module.css";
 import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "http://localhost:3000/api/graphql",
+  uri: "/api/graphql",
   cache: new InMemoryCache(),
 });
 
