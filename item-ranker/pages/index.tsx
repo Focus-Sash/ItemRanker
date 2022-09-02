@@ -7,7 +7,7 @@ import path from "path";
 import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: path.join(process.cwd(), "api/graphql"),
+  uri: "http://localhost:3000/api/graphql",
   cache: new InMemoryCache(),
 });
 
