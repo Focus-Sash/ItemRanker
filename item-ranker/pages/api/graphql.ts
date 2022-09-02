@@ -21,7 +21,7 @@ interface Context {
 const resolvers = {
   Query: {
     hello: () => 'Hello World',
-    users: async (parent: undefined, args: {}, context: Context) => {
+    users: async (parent: undefined, args: unknown, context: Context) => {
       return await context.prisma.user.findMany();
     }
   }
