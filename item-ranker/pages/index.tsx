@@ -2,11 +2,12 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
+import path from "path";
 
 import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: "/api/graphql",
+  uri: path.join(process.cwd(), "/api/graphql"),
   cache: new InMemoryCache(),
 });
 
