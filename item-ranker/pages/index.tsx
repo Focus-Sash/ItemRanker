@@ -1,9 +1,46 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
+
+import { ApolloClient, InMemoryCache, gql, useQuery } from "@apollo/client";
+
+const client = new ApolloClient({
+  uri: "http://localhost:3000/api/graphql",
+  cache: new InMemoryCache(),
+});
+
+client
+  .query({
+    query: gql`
+      query GetUsers {
+        users {
+          id
+          name
+          email
+        }
+      }
+    `,
+  })
+  .then((result) => console.log(result));
+const GET_USERS = gql`
+  query GetUsers {
+    users {
+      id
+      name
+      email
+    }
+  }
+`;
 
 const Home: NextPage = () => {
+  const { data, loading, error } = useQuery(GET_USERS);
+
+  if (loading) return <p>ローディング中です</p>;
+  if (error) return <p>エラーが発生しています</p>;
+
+  const { users } = data;
+
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +55,7 @@ const Home: NextPage = () => {
         </h1>
 
         <p className={styles.description}>
-          Get started by editing{' '}
+          Get started by editing{" "}
           <code className={styles.code}>pages/index.tsx</code>
         </p>
 
@@ -51,6 +88,10 @@ const Home: NextPage = () => {
             </p>
           </a>
         </div>
+        <h1>ユーザ情報</h1>
+        {users.map((user: { id: number; name: string; email: string }) => (
+          <div key={user.id}>Name: {user.name}</div>
+        ))}
       </main>
 
       <footer className={styles.footer}>
@@ -59,14 +100,14 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
